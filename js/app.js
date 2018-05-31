@@ -25,6 +25,18 @@ function shuffle(array) {
     return array;
 }
 
+function displayCards(){
+  const container = document.querySelector('.deck');
+  listOfCards.forEach(function(item, index){
+    const listElement = document.createElement('li');
+    listElement.setAttribute('class', 'card');
+    listElement.innerHTML = `<i class = ${index}></i>`
+    container.appendChild(listElement);
+  });
+}
+
+displayCards();
+shuffle(listOfCards);
 
 /*
  * set up the event listener for a card. If a card is clicked:

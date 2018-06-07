@@ -27,6 +27,7 @@ function shuffle(array) {
 
 const container = document.querySelector('.deck');
 let listOpen = [];
+const matchedCards = [];
 
 function createList(){
   listOfCards.forEach(function(i){
@@ -50,13 +51,15 @@ function clickElement(listElement){
         if(listElement.innerHTML === listOpen[0].innerHTML){
             listElement.classList.add('match');
             listOpen[0].classList.add('match');
+            matchedCards.push(listElement, listOpen[0]);
             listOpen = [];
         }else {
             listElement.classList.remove('open', 'show');
             listOpen[0].classList.remove('open', 'show');
             listOpen = [];
         }
-               moveInc();
+         moveInc();
+         match();
 
      } else {
        listElement.classList.add('open', 'show');
@@ -79,6 +82,27 @@ let movesCounter = 0;
 function moveInc(){
   movesCounter++;
   moves.innerHTML = movesCounter;
+}
+
+function match(){
+  if(matchedCards.length === listOfCards.length){
+    const box = document.createElement('div');
+    box.classList.add('button');
+    box.innerHTML = '<h1 class= "mated"> Congratulations! </h1>';
+    document.querySelector('.container').appendChild(box);
+    const btn = document.createElement('div');
+    btn.classList.add('buttong');
+    btn.innerHTML = 'Play again';
+    box.appendChild(btn);
+
+    btn.addEventListener('click', function(){
+      container.innerHTML = '';
+      createList();
+      listOpen = [];
+      box.remove();
+      movesCounter = 0;
+    })
+  }
 }
 createList();
 /*

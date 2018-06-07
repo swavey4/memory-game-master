@@ -1,7 +1,7 @@
 /*
  * Create a list that holds all of your cards
  */
-const listOfCards = ["fa fa-diamond","fa fa-diamond","fa fa-paper-plane-o","fa fa-paper-plane-o","fa fa-anchor","fa fa-anchor","fa fa-bolt","fa fa-bolt","fa fa-cube","fa fa-cube","fa fa-leaf","fa fa-leaf","fa fa-bicycle","fa fa-bicycle","fa fa-bomb","fa fa-bomb" ]
+const listOfCards = [ "fa fa-diamond", "fa fa-diamond", "fa fa-paper-plane-o", "fa fa-paper-plane-o", "fa fa-anchor", "fa fa-anchor", "fa fa-bolt", "fa fa-bolt", "fa fa-cube", "fa fa-cube", "fa fa-leaf", "fa fa-leaf", "fa fa-bicycle", "fa fa-bicycle", "fa fa-bomb", "fa fa-bomb" ]
 
 /*
  * Display the cards on the page
@@ -25,19 +25,42 @@ function shuffle(array) {
     return array;
 }
 
-function displayCards(){
-  const container = document.querySelector('.deck');
-  listOfCards.forEach(function(item, index){
-    const listElement = document.createElement('li');
-    listElement.setAttribute('class', 'card');
-    listElement.innerHTML = `<i class = ${index}></i>`
-    container.appendChild(listElement);
-  });
+const container = document.querySelector('.deck');
+let listOpen = [];
+
+listOfCards.forEach(function(i){
+  const listElement = document.createElement('li');
+  listElement.classList.add('card');
+  listElement.innerHTML = `<i class= "${i}" > </i>`
+  container.appendChild(listElement);
+
+  clickElement(listElement);
+});
+
+
+function clickElement(listElement){
+  listElement.addEventListener('click', function(){
+
+    if (listOpen.length === 1){
+        listElement.classList.add('open', 'show');
+        listOpen.push(listElement);
+
+        if(listElement.innerHTML === listOpen[0].innerHTML){
+            listElement.classList.add('match');
+            listOpen[0].classList.add('match');
+            listOpen = [];
+        }else {
+            listElement.classList.remove('open', 'show');
+            listOpen[0].classList.remove('open', 'show');
+            listOpen = [];
+        }
+
+     } else {
+       listElement.classList.add('open', 'show');
+       listOpen.push(listElement);
+     }
+    })
 }
-
-displayCards();
-shuffle(listOfCards);
-
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)

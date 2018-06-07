@@ -56,6 +56,7 @@ function clickElement(listElement){
             listOpen[0].classList.remove('open', 'show');
             listOpen = [];
         }
+               moveInc();
 
      } else {
        listElement.classList.add('open', 'show');
@@ -73,6 +74,12 @@ function reset(){
   })
 }
 
+const moves = document.querySelector('.moves');
+let movesCounter = 0;
+function moveInc(){
+  movesCounter++;
+  moves.innerHTML = movesCounter;
+}
 createList();
 /*
  * set up the event listener for a card. If a card is clicked:

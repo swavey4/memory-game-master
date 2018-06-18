@@ -107,3 +107,25 @@ h1 {
     float: right;
     cursor: pointer;
 }
+
+
+.button {
+    width: 50%;
+    position: absolute;
+    top: 25%;
+    left: 25%;
+    background-color: grey;
+    border: 1px solid black;
+    text-align: center;
+}
+
+.buttong {
+    text-align: center;
+    border: 1px solid black;
+}
+
+.mated {
+    text-align: center;
+    font-weight: bolder;
+
+}

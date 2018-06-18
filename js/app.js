@@ -38,6 +38,7 @@ function createList(){
 
   clickElement(listElement);
   reset();
+  // shuffle(listOfCards);
 });
 }
 
@@ -74,6 +75,7 @@ function reset(){
     container.innerHTML = '';
     createList();
     listOpen = [];
+    shuffle(listOfCards);
   })
 }
 
@@ -82,6 +84,8 @@ let movesCounter = 0;
 function moveInc(){
   movesCounter++;
   moves.innerHTML = movesCounter;
+
+  star();
 }
 
 function match(){
@@ -101,10 +105,28 @@ function match(){
       listOpen = [];
       box.remove();
       movesCounter = 0;
+      shuffle(listOfCards);
     })
   }
 }
+
+
+const starRating = document.querySelector('.stars');
+function star(){
+  if (movesCounter > 25){
+    starRating.innerHTML = `<li><i class="fa fa-star"></i></li>`;
+  } else if (movesCounter > 17 ){
+    starRating.innerHTML = `<li><i class="fa fa-star"></i></li>
+    <li><i class="fa fa-star"></i></li>`;
+  } else if (movesCounter < 16){
+    starRating.innerHTML = `<li><i class="fa fa-star"></i></li>
+    <li><i class="fa fa-star"></i></li>
+    <li><i class="fa fa-star"></i></li>`;
+  }
+}
+
 createList();
+
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)

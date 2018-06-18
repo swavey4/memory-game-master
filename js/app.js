@@ -28,7 +28,7 @@ function shuffle(array) {
 const container = document.querySelector('.deck');
 let listOpen = [];
 const matchedCards = [];
-
+shuffle(listOfCards);
 function createList(){
   listOfCards.forEach(function(i){
     const listElement = document.createElement('li');
@@ -38,7 +38,7 @@ function createList(){
 
   clickElement(listElement);
   reset();
-  // shuffle(listOfCards);
+
 });
 }
 
@@ -76,6 +76,7 @@ function reset(){
     createList();
     listOpen = [];
     shuffle(listOfCards);
+    
   })
 }
 

@@ -37,7 +37,6 @@ function createList(){
       container.appendChild(listElement);
 
   clickElement(listElement);
-  reset();
 
 });
 }
@@ -69,23 +68,26 @@ function clickElement(listElement){
     })
 }
 
-function reset(){
-  const reset = document.querySelector('.restart');
-  reset.addEventListener('click', function(){
-    container.innerHTML = '';
-    createList();
-    listOpen = [];
-    shuffle(listOfCards);
-    
+
+const reset = document.querySelector('.restart');
+reset.addEventListener('click', function(){
+  container.innerHTML = '';
+  createList();
+  listOpen = [];
+  shuffle(listOfCards);
+  movesCounter = 0;
+  moves.innerHTML = movesCounter;
+  starRating.innerHTML = `<li><i class="fa fa-star"></i></li>
+  <li><i class="fa fa-star"></i></li>
+  <li><i class="fa fa-star"></i></li>`;
   })
-}
 
 const moves = document.querySelector('.moves');
 let movesCounter = 0;
+moves.innerHTML = 0;
 function moveInc(){
   movesCounter++;
   moves.innerHTML = movesCounter;
-
   star();
 }
 
@@ -103,7 +105,7 @@ function match(){
     btn.addEventListener('click', function(){
       container.innerHTML = '';
       createList();
-      listOpen = [];
+      matchedCards = [];
       box.remove();
       movesCounter = 0;
       shuffle(listOfCards);

@@ -130,3 +130,8 @@ h1 {
     font-weight: bolder;
 
 }
+
+.timer {
+  display: inline-block;
+  padding-left: 72.5px;
+}

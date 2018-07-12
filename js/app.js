@@ -1,14 +1,7 @@
 /*
- * Create a list that holds all of your cards
+ * Create a list that holds all of your card
  */
 let listOfCards = [ "fa fa-diamond", "fa fa-diamond", "fa fa-paper-plane-o", "fa fa-paper-plane-o", "fa fa-anchor", "fa fa-anchor", "fa fa-bolt", "fa fa-bolt", "fa fa-cube", "fa fa-cube", "fa fa-leaf", "fa fa-leaf", "fa fa-bicycle", "fa fa-bicycle", "fa fa-bomb", "fa fa-bomb" ]
-
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- */
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -25,10 +18,14 @@ function shuffle(array) {
     return array;
 }
 
+/*
+/* DISPLAY CARDS
+*/
 const container = document.querySelector('.deck');
 let listOpen = [];
 const matchedCards = [];
 shuffle(listOfCards);
+// LOOP THROUGH EACH CARD AND ADD CARD CLASS
 function createList(){
   listOfCards.forEach(function(i){
     const listElement = document.createElement('li');
@@ -37,9 +34,12 @@ function createList(){
       container.appendChild(listElement);
 
   clickElement(listElement);
-
 });
 }
+
+/*
+/* MATCHING CARDS
+*/
 
 function clickElement(listElement){
   listElement.addEventListener('click', function(){
@@ -48,71 +48,138 @@ function clickElement(listElement){
         listElement.classList.add('open', 'show');
         listOpen.push(listElement);
 
+// COMPARE IF CARDS MATCH
         if(listElement.innerHTML === listOpen[0].innerHTML){
             listElement.classList.add('match');
             listOpen[0].classList.add('match');
             matchedCards.push(listElement, listOpen[0]);
             listOpen = [];
         }else {
+
+            setTimeout(function(){
             listElement.classList.remove('open', 'show');
             listOpen[0].classList.remove('open', 'show');
+
             listOpen = [];
+          }, 500);
         }
-         moveInc();
-         match();
+        match();
+        moveInc();
+
 
      } else {
        listElement.classList.add('open', 'show');
        listOpen.push(listElement);
      }
+     restart();
     })
 }
 
+/*
+/* RESET FUNCTION
+*/
 
 const reset = document.querySelector('.restart');
+
+function restart(){
 reset.addEventListener('click', function(){
+  // CLEAR CARDS
   container.innerHTML = '';
+  // ADD CARDS
   createList();
+  // CLEAR CARDS IN OPEN ARRAY
   listOpen = [];
+  // SHUFFLE CARDS
   shuffle(listOfCards);
+  // RESET TIMER
+  clearInterval(timer);
+  minute = 0;
+  second = 0;
+  time.innerHTML = minute+":"+second;
+  //  RESET MOVES
   movesCounter = 0;
   moves.innerHTML = movesCounter;
   starRating.innerHTML = `<li><i class="fa fa-star"></i></li>
   <li><i class="fa fa-star"></i></li>
   <li><i class="fa fa-star"></i></li>`;
   })
+}
 
+/*
+/* MOVE COUNTER
+*/
 const moves = document.querySelector('.moves');
 let movesCounter = 0;
 moves.innerHTML = 0;
+
 function moveInc(){
   movesCounter++;
   moves.innerHTML = movesCounter;
-  star();
+
+    star();
+
+/* START TIMER */
+  if(movesCounter === 1){
+        second = 0;
+        minute = 0;
+        hour = 0;
+        setTime();
+    }
 }
+
+/*
+/* GAME OVER
+*/
 
 function match(){
   if(matchedCards.length === listOfCards.length){
+    // STOP TIMER
+    clearInterval(timer);
+    // CREATE MODAL
     const box = document.createElement('div');
     box.classList.add('button');
     box.innerHTML = '<h1 class= "mated"> Congratulations! </h1>';
     document.querySelector('.container').appendChild(box);
+    const innerBox = document.createElement('div');
+    innerBox.classList.add('inner');
+    box.appendChild(innerBox);
+    innerBox.appendChild(starRating);
+    innerBox.appendChild(time);
     const btn = document.createElement('div');
     btn.classList.add('buttong');
     btn.innerHTML = 'Play again';
     box.appendChild(btn);
+    
+
+
+// CLICK TO RESTART
 
     btn.addEventListener('click', function(){
-      container.innerHTML = '';
-      createList();
-      matchedCards = [];
       box.remove();
+      container.innerHTML = '';
+      listOpen = [];
+      createList();
       movesCounter = 0;
       shuffle(listOfCards);
+      // RESET TIMER
+      clearInterval(timer);
+      minute = 0;
+      second = 0;
+      time.innerHTML = minute+":"+second;
+      //  RESET MOVES
+      movesCounter = 0;
+      moves.innerHTML = movesCounter;
+      starRating.innerHTML = `<li><i class="fa fa-star"></i></li>
+      <li><i class="fa fa-star"></i></li>
+      <li><i class="fa fa-star"></i></li>`;
     })
   }
 }
 
+
+/*
+/* STAR RATING
+*/
 
 const starRating = document.querySelector('.stars');
 function star(){
@@ -127,6 +194,31 @@ function star(){
     <li><i class="fa fa-star"></i></li>`;
   }
 }
+
+/*
+/* TIMER FUNCTION
+*/
+let second = 0, minute = 0;
+const time = document.querySelector(".timer");
+let timer;
+
+function setTime(){
+  timer = setInterval(function(){
+  time.innerHTML = minute+":"+second;
+  second++;
+
+  if(second === 60){
+    minute++;
+    second = 0;
+    }
+    if(minute === 60){
+    hour++;
+    minute = 0;
+        }
+
+},1000)
+}
+
 
 createList();
 

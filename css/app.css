@@ -150,3 +150,7 @@ h1 {
 li {
   display: inline-block;
 }
+
+.moves {
+  padding-left: 50px;
+}

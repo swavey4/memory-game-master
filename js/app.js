@@ -63,14 +63,16 @@ function clickElement(listElement){
             listOpen = [];
           }, 500);
         }
-        match();
+
         moveInc();
+        match();
 
 
      } else {
        listElement.classList.add('open', 'show');
        listOpen.push(listElement);
      }
+
      restart();
     })
 }
@@ -145,16 +147,18 @@ function match(){
     box.appendChild(innerBox);
     innerBox.appendChild(starRating);
     innerBox.appendChild(time);
+    innerBox.appendChild(moves);
     const btn = document.createElement('div');
     btn.classList.add('buttong');
     btn.innerHTML = 'Play again';
     box.appendChild(btn);
-    
+
 
 
 // CLICK TO RESTART
 
     btn.addEventListener('click', function(){
+      location.reload();
       box.remove();
       container.innerHTML = '';
       listOpen = [];
